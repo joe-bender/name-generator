@@ -20,7 +20,6 @@ function genName(model, firstLetter) {
       break;
     }
     name += letter;
-    console.log(name);
   }
   // capitalize name
   return name.charAt(0).toUpperCase() + name.slice(1);
