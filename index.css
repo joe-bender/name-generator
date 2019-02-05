@@ -1,0 +1,16 @@
+body {
+  margin: auto;
+  width: 600px;
+}
+
+#loadingDisplay {
+  background-color: yellow;
+}
+
+#epsilonSlider {
+  width: 300px;
+}
+
+#choicesSlider {
+  width: 300px;
+}

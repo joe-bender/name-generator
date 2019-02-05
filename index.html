@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="index.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.14.2/dist/tf.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore.js"></script>
@@ -9,7 +10,47 @@
     <title>Name Generator</title>
   </head>
   <body>
-    <button type="button" id="genButton">Generate Name</button>
-    <p id="nameDisplay"></p>
+    <h1>Name Generator</h1>
+    <div id="readme">
+      <p>
+        Can't think of a good name for your fictional character? Click the "Generate Names"
+        button to create a list of names to choose from.
+      </p>
+      <p>
+        Names are generated using a neural network that, given a series of letters, predicts the following letter.
+        The first letter is chosen completely randomly, but each subsequent letter is chosen from a selection of letters
+        according to the settings below. This selection of letters will be referred to as the "choice pool" and includes
+        the network's best predictions for each letter of the name. You can choose the size of this choice pool and how
+        likely the network is to choose from this choice pool. When not choosing from the pool, the network simply chooses
+        its best prediction.
+      </p>
+      <h3>Controls</h3>
+      <ul>
+        <li>Choices: the number of predicted letters to choose from.</li>
+        <li>Randomness: the probability that each letter will be selected randomly from the choice pool, instead of using the top choice.</li>
+      </ul>
+      <h3>Tips</h3>
+      <ul>
+        <li>The randomness setting won't have any effect if the choice pool size is 1.</li>
+        <li>The larger the choice pool size, the stranger the names.</li>
+        <li>The larger the randomness, the more variety in the names.</li>
+      </ul>
+    </div>
+    <div id="controls">
+      <p id="loadingDisplay">Loading...</p>
+      <table>
+        <tr>
+          <td>Choice Pool Size</td>
+          <td><input type="range" min="1" max="26" value="3" step="1" class="slider" id="choicesSlider"></td>
+          <td><span id="choicesDisplay"></span></td>
+        </tr>
+        <tr>
+          <td>Randomness</td>
+          <td><input type="range" min="0" max="1" value=".2" step=".1" class="slider" id="epsilonSlider"></td>
+          <td><span id="epsilonDisplay"></span></td>
+        </tr>
+      </table>
+    </div>
+    <ul id="nameDisplay"></ul>
   </body>
 </html>
