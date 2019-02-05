@@ -118,7 +118,7 @@ $(document).ready(function() {
       for (let i = 0; i < numNames; i++) {
         let char = _.sample(lowercaseLetters);
         let name = genName(model, char);
-        listItems += '<li>'+name+'</li>';
+        listItems += name+'<br>';
       }
       nameDisplay.html(listItems);
     }
