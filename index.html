@@ -1,57 +1,83 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="index.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.14.2/dist/tf.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore.js"></script>
-    <script type="text/javascript" src="index.js"></script>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
     <title>Name Generator</title>
   </head>
-  <body>
-    <h1>Name Generator</h1>
-    <div id="readme">
-      <p>
-        Can't think of a good name for your fictional character? Click the "Generate Names"
-        button to create a list of names to choose from.
-      </p>
-      <p>
-        Names are generated using a neural network that, given a series of letters, predicts the following letter.
-        The first letter is chosen completely randomly, but each subsequent letter is chosen from a selection of letters
-        according to the settings below. This selection of letters will be referred to as the "choice pool" and includes
-        the network's best predictions for each letter of the name. You can choose the size of this choice pool and how
-        likely the network is to choose from this choice pool. When not choosing from the pool, the network simply chooses
-        its best prediction.
-      </p>
-      <h3>Controls</h3>
-      <ul>
-        <li>Choices: the number of predicted letters to choose from.</li>
-        <li>Randomness: the probability that each letter will be selected randomly from the choice pool, instead of using the top choice.</li>
-      </ul>
-      <h3>Tips</h3>
-      <ul>
-        <li>The randomness setting won't have any effect if the choice pool size is 1.</li>
-        <li>The larger the choice pool size, the stranger the names.</li>
-        <li>The larger the randomness, the more variety in the names.</li>
-      </ul>
+  <body class="bg-light">
+    <div class="container col-md-5">
+
+      <div class="container my-3">
+        <h1>Name Generator</h1>
+      </div>
+
+      <div class="container">
+        <table class="table table-bordered">
+          <tr>
+            <th class="w-25 table-primary" scope="row">Choice Pool Size</th>
+            <td class="w-25 table-info font-weight-bold text-center"><span id="choicesDisplay">3</span></td>
+            <td class="w-auto table-light"><input type="range" min="1" max="26" value="3" step="1" class="slider w-100"id="choicesSlider"></td>
+          </tr>
+          <tr>
+            <th class="w-25 table-primary" scope="row">Randomness</th>
+            <td class="w-25 table-info font-weight-bold text-center"><span id="epsilonDisplay">0.7</span></td>
+            <td class="w-auto table-light"><input type="range" min="0" max="1" value=".7" step=".1" class="slider w-100" id="epsilonSlider"></td>
+          </tr>
+        </table>
+        <button type="button" class="btn btn-primary" id="genButton" style="display:none;">Generate Names</button>
+        <div class="spinner-border text-primary" role="status" id="loadingDisplay">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+
+      <div class="container my-3 col-xs-1">
+        <ul class="list-group w-auto" id="nameDisplay">
+        </ul>
+      </div>
+
+      <div class="container my-3">
+        <h2>How It Works</h2>
+        <p>
+          Can't think of a good name for your fictional character? Click the "Generate Names"
+          button to create a list of names to choose from.
+        </p>
+        <p>
+          Names are generated using a neural network that, given a series of letters, predicts the following letter.
+          The first letter is chosen completely randomly, but each subsequent letter is chosen from a selection of letters
+          according to the settings below. This selection of letters will be referred to as the "choice pool" and includes
+          the network's best predictions for each letter of the name. You can choose the size of this choice pool and how
+          likely the network is to choose from this choice pool. When not choosing from the pool, the network simply chooses
+          its best prediction.
+        </p>
+        <h4>Controls</h4>
+        <ul>
+          <li>Choice Pool Size: the number of predicted letters to choose from.</li>
+          <li>Randomness: the probability that each letter will be selected randomly from the choice pool, instead of using the top choice.</li>
+        </ul>
+        <h4>Tips</h4>
+        <ul>
+          <li>The randomness setting won't have any effect if the choice pool size is 1.</li>
+          <li>The larger the choice pool size, the stranger the names.</li>
+          <li>The larger the randomness, the more variety in the names.</li>
+        </ul>
+      </div>
+
     </div>
-    <div id="controls">
-      <p id="loadingDisplay">Loading...</p>
-      <table>
-        <tr>
-          <td>Choice Pool Size</td>
-          <td><input type="range" min="1" max="26" value="3" step="1" class="slider" id="choicesSlider"></td>
-          <td><span id="choicesDisplay"></span></td>
-        </tr>
-        <tr>
-          <td>Randomness</td>
-          <td><input type="range" min="0" max="1" value=".2" step=".1" class="slider" id="epsilonSlider"></td>
-          <td><span id="epsilonDisplay"></span></td>
-        </tr>
-      </table>
-    </div>
-    <p id="nameDisplay">
-    </p>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.14.2/dist/tf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore.js"></script>
+
+    <script type="text/javascript" src="index.js"></script>
+
   </body>
 </html>

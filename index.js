@@ -76,65 +76,66 @@ function nameToX(name) {
 }
 
 $(document).ready(function() {
-  loadModel().then(function(model) {
-    // add the generate button
-    let button = $('<button type="button" id="genButton">Generate Names</button>');
-    let controls = $('#controls');
-    controls.prepend(button);
 
-    let loadingDisplay = $('#loadingDisplay');
-    loadingDisplay.hide();
-
-    let nameDisplay = $('#nameDisplay');
-
-
-    let epsilonSlider = $('#epsilonSlider');
+  let epsilonSlider = $('#epsilonSlider');
+  epsilon = epsilonSlider.val();
+  let epsilonDisplay = $('#epsilonDisplay');
+  epsilonDisplay.text(epsilon);
+  epsilonSlider.on('input', function(){
     epsilon = epsilonSlider.val();
-    let epsilonDisplay = $('#epsilonDisplay');
     epsilonDisplay.text(epsilon);
-    epsilonSlider.on('input', function(){
-      epsilon = epsilonSlider.val();
-      epsilonDisplay.text(epsilon);
-    });
+  });
 
-    let choicesSlider = $('#choicesSlider');
+  let choicesSlider = $('#choicesSlider');
+  choices = choicesSlider.val();
+  let choicesDisplay = $('#choicesDisplay');
+  choicesDisplay.text(choices);
+  choicesSlider.on('input', function(){
     choices = choicesSlider.val();
-    let choicesDisplay = $('#choicesDisplay');
     choicesDisplay.text(choices);
-    choicesSlider.on('input', function(){
-      choices = choicesSlider.val();
-      choicesDisplay.text(choices);
-    });
+  });
 
-    function toLoadingMode() {
-      button.hide();
-      loadingDisplay.show();
-      nameDisplay.hide()
-      nameDisplay.empty();
-    }
+  let button = $('#genButton');
+  button.hide();
+  let loadingDisplay = $('#loadingDisplay');
 
-    async function appendNames() {
-      let listItems = '';
-      for (let i = 0; i < numNames; i++) {
-        let char = _.sample(lowercaseLetters);
-        let name = genName(model, char);
-        listItems += name+'<br>';
-      }
-      nameDisplay.html(listItems);
-    }
+  let nameDisplay = $('#nameDisplay');
 
-    function toDisplayMode() {
+  setTimeout(function() {
+    console.log('start');
+    loadModel().then(function(model) {
       button.show();
       loadingDisplay.hide();
-      nameDisplay.show();
-    }
 
-    button.click(function(){
-      toLoadingMode();
-      setTimeout(function(){
-        appendNames().then(toDisplayMode);
-      }, 1);
+      function toLoadingMode() {
+        button.hide();
+        loadingDisplay.show();
+        nameDisplay.hide()
+        nameDisplay.empty();
+      }
+
+      async function appendNames() {
+        let listItems = '';
+        for (let i = 0; i < numNames; i++) {
+          let char = _.sample(lowercaseLetters);
+          let name = genName(model, char);
+          listItems += '<li class="list-group-item py-1">' + name + '</li>'
+        }
+        nameDisplay.html(listItems);
+      }
+
+      function toDisplayMode() {
+        button.show();
+        loadingDisplay.hide();
+        nameDisplay.show();
+      }
+
+      button.click(function(){
+        toLoadingMode();
+        setTimeout(function(){
+          appendNames().then(toDisplayMode);
+        }, 100);
+      });
     });
-
-  });
+  }, 100);
 });
