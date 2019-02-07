@@ -1,11 +1,9 @@
 // Constants
-const sequenceLength = 15;
 const maxLength = 15;
 const lowercaseLetters = 'abcdefghijklmnopqrstuvwxyz'
 const chars = lowercaseLetters + ' ';
 let epsilon;
 let choices;
-let startingLetter = 'b';
 let numNames = 20;
 
 async function loadModel() {
@@ -24,7 +22,7 @@ function genName(model, firstLetter) {
     let letterInt;
     if (Math.random() < epsilon) {
       // choose randomly from the first n argmaxes
-      letterInt = _.sample(argmaxes.slice(0, choices));
+      letterInt = _.sample(argmaxes);
     } else {
       // choose the first argmax
       letterInt = argmaxes[0];
@@ -43,14 +41,15 @@ function probsToArgmaxes(probs) {
   let argmaxes = [];
   let max_prob = -1;
   let max_i = -1;
-  for (let i_outer = 0; i_outer < probs.length; i_outer++) {
+  // for (let i_outer = 0; i_outer < probs.length; i_outer++) {
+  for (let i_outer = 0; i_outer < choices; i_outer++) {
     for (let i = 0; i < probs.length; i++) {
       if (probs[i] > max_prob) {
         max_prob = probs[i];
         max_i = i;
       }
     }
-    argmaxes.push(max_i)
+    argmaxes.push(max_i);
     probs[max_i] = -1;
     max_prob = -1;
     max_i = -1;
