@@ -1,5 +1,6 @@
 // Constants
 const sequenceLength = 15;
+const maxLength = 15;
 const lowercaseLetters = 'abcdefghijklmnopqrstuvwxyz'
 const chars = lowercaseLetters + ' ';
 let epsilon;
@@ -14,10 +15,10 @@ async function loadModel() {
 
 function genName(model, firstLetter) {
   let name = firstLetter;
-  for (let i_seq = 0; i_seq < sequenceLength; i_seq++) {
+  for (let i_seq = 0; i_seq < maxLength; i_seq++) {
     let x = nameToX(name);
     let y_pred = model.predict(x);
-    let probs = y_pred.squeeze().slice([i_seq, 0], [1, chars.length]).squeeze();
+    let probs = y_pred.slice([0, i_seq]).flatten();
     let argmaxes = probsToArgmaxes(probs.dataSync());
     // epsilon greedy letter choice
     let letterInt;
@@ -66,9 +67,8 @@ function iToChar(i) {
 }
 
 function nameToX(name) {
-  let namePadded = name.padEnd(sequenceLength);
   let nameInts = [];
-  for (let char of namePadded) {
+  for (let char of name) {
     nameInts.push(charToI(char));
   }
   let nameTensor = tf.tensor2d([nameInts])
@@ -102,7 +102,6 @@ $(document).ready(function() {
   let nameDisplay = $('#nameDisplay');
 
   setTimeout(function() {
-    console.log('start');
     loadModel().then(function(model) {
       button.show();
       loadingDisplay.hide();
