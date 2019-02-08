@@ -8,16 +8,18 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
-    <title>Name Generator</title>
+    <title>Name Generator (powered by A.I.)</title>
   </head>
   <body class="bg-light">
     <div class="container col-md-5">
 
-      <div class="container my-3">
+      <div class="container mt-3 mb-4">
+        <img src="img/art.jpg" width="100px" height="100px" class="rounded float-left mr-3">
         <h1>Name Generator</h1>
+        <h2>Powered by A.I.</h2>
       </div>
 
-      <div class="container">
+      <div class="container mt-2">
         <table class="table table-bordered">
           <tr>
             <th class="w-25 table-primary" scope="row">Choice Pool Size</th>
@@ -37,14 +39,14 @@
       </div>
 
       <div class="container my-3 col-xs-1">
-        <ul class="list-group w-auto" id="nameDisplay">
+        <ul class="list-group w-auto lead" id="nameDisplay">
         </ul>
       </div>
 
       <div class="container my-3">
         <h2>How It Works</h2>
         <p>
-          Can't think of a good name for your fictional character? Click the "Generate Names"
+          Looking for a good name for your fictional character? Click the "Generate Names"
           button to create a list of names to choose from.
         </p>
         <p>
@@ -52,8 +54,15 @@
           The first letter is chosen completely randomly, but each subsequent letter is chosen from a selection of letters
           according to the settings below. This selection of letters will be referred to as the "choice pool" and includes
           the network's best predictions for each letter of the name. You can choose the size of this choice pool and how
-          likely the network is to choose from this choice pool. When not choosing from the pool, the network simply chooses
+          likely the network is to choose from it. When not choosing from the pool, the network simply chooses
           its best prediction.
+        </p>
+        <h4>Example</h4>
+        <p>
+          A Choice Pool Size setting of 3 combined with a Randomness setting of 0.7 means that each letter has a 70% chance
+          of being picked from the top 3 most likely letters to be put in that position of the name, according to the neural
+          network's predictions based on the previous letters of the name. The other 30% of the time, the chosen letter will be the
+          top most likely letter prediction.
         </p>
         <h4>Controls</h4>
         <ul>
@@ -62,10 +71,18 @@
         </ul>
         <h4>Tips</h4>
         <ul>
-          <li>The randomness setting won't have any effect if the choice pool size is 1.</li>
-          <li>The larger the choice pool size, the stranger the names.</li>
-          <li>The larger the randomness, the more variety in the names.</li>
+          <li>The Randomness setting won't have any effect if the Choice Pool Size is 1.</li>
+          <li>The Choice Pool Size setting won't have any effect if the Randomness is 0.</li>
+          <li>The larger the Choice Pool Size, the stranger the names.</li>
+          <li>The larger the Randomness, the more variety in the names.</li>
         </ul>
+        <h4>Links</h4>
+        <ul>
+          <li><a href="https://joebenderai.wordpress.com/" target="_blank">my blog</a></li>
+          <li><a href="https://github.com/joebenderai" target="_blank">my GitHub</a></li>
+          <li><a href="https://soundcloud.com/modularmoose" target="_blank">my music on Soundcloud</a></li>
+        </ul>
+        <p>© 2019 Joe Bender</p>
       </div>
 
     </div>

@@ -1,10 +1,10 @@
 // Constants
 const maxLength = 15;
-const lowercaseLetters = 'abcdefghijklmnopqrstuvwxyz'
+const lowercaseLetters = 'abcdefghijklmnopqrstuvwxyz';
 const chars = lowercaseLetters + ' ';
 let epsilon;
 let choices;
-let numNames = 20;
+let numNames = 10;
 
 async function loadModel() {
   let model = await tf.loadModel('models/model.json');
@@ -70,7 +70,7 @@ function nameToX(name) {
   for (let char of name) {
     nameInts.push(charToI(char));
   }
-  let nameTensor = tf.tensor2d([nameInts])
+  let nameTensor = tf.tensor2d([nameInts]);
   return nameTensor;
 }
 
@@ -108,7 +108,7 @@ $(document).ready(function() {
       function toLoadingMode() {
         button.hide();
         loadingDisplay.show();
-        nameDisplay.hide()
+        nameDisplay.hide();
         nameDisplay.empty();
       }
 
@@ -117,7 +117,7 @@ $(document).ready(function() {
         for (let i = 0; i < numNames; i++) {
           let char = _.sample(lowercaseLetters);
           let name = genName(model, char);
-          listItems += '<li class="list-group-item py-1">' + name + '</li>'
+          listItems += '<li class="list-group-item py-1">' + name + '</li>';
         }
         nameDisplay.html(listItems);
       }
